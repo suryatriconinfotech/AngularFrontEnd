@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <!-- Profile Section -->
+    <div class="profile-container">
+      <h1>Profile</h1>
+      <div *ngIf="user$ | async as user; else loading">
+        <p><strong>Username:</strong> <span class="user">{{ user.username }}</span></p>
+        <p><strong>Role:</strong> <span class="user">{{ user.role }}</span></p>
+      </div>
+      <ng-template #loading>
+        <p>Loading user data...</p>
+      </ng-template>
+  
+      <!-- Logout Button (optional) -->
+      <!-- <button class="btn btn-danger" (click)="handleLogout()">Logout</button> -->
+    </div>
+  
+    <!-- Pending User Approvals Section (Visible only for Librarians) -->
+    <div *ngIf="user$ | async as user; else loading">
+      <div *ngIf="user.role === 'LIBRARIAN'" class="pending-users-container mt-4">
+        <h2>Pending User Approvals</h2>
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+        <div *ngIf="!(pendingUsers$ | async)?.length">
+          <p>No users waiting for approval.</p>
+        </div>
+  
+        <!-- List of Pending Users -->
+        <ul class="list-group">
+          <li *ngFor="let pendingUser of pendingUsers$ | async" class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ pendingUser.username }}</strong> (Role: {{ pendingUser.role }})
+            </div>
+            <button class="btn btn-primary" (click)="handleApprove(pendingUser.username)">
+              Approve
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  

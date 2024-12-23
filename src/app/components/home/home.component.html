@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Available Books</h1>
+
+  <div   class="row">
+    <!-- Loop through books to display them as cards -->
+    <div *ngFor="let book of books$ | async" class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ book.bookname }} by {{ book.author }}</h5>
+          <p class="card-text">Available Count: {{ book.count }}</p>
+
+          <!-- Show Order button for Students -->
+          <div *ngIf="(user$ | async)?.role === 'STUDENT'">
+            <button
+              class="btn btn-primary w-100"
+              (click)="orderBook(book)"
+              [disabled]="book.count <= 0">
+              {{ book.count > 0 ? 'Order' : 'Out of Stock' }}
+            </button>
+          </div>
+
+          <!-- Show Delete button for Librarians -->
+          <div *ngIf="(user$ | async)?.role === 'LIBRARIAN'">
+            <button
+              class="btn btn-danger w-100 mt-2"
+              (click)="deleteBook(book.id)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show Add Book button for Librarians -->
+  <div *ngIf="(user$ | async)?.role === 'LIBRARIAN'">
+    <button class="btn btn-success w-100 mt-4" (click)="handleAddBook()">Add Book</button>
+  </div>
+</div>

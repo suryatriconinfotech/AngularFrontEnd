@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <h2>Signup</h2>
+    <form class="row g-3" (submit)="onSignup()">
+      <div class="col-md-6">
+        <label for="inputUsername" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputUsername" [(ngModel)]="signupData.username" name="username" required />
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" [(ngModel)]="signupData.password" name="password" required />
+      </div>
+      <div class="col-md-6">
+        <label for="inputRole" class="form-label">Role</label>
+        <select class="form-select" id="inputRole" [(ngModel)]="signupData.role" name="role">
+          <option value="STUDENT">Student</option>
+          <option value="LIBRARIAN">Librarian</option>
+        </select>
+      </div>
+    
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Signup</button>
+      </div>
+    </form>
+  </div>
+  
